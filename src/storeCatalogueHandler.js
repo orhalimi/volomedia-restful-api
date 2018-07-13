@@ -2,6 +2,7 @@
 const utils = require("./utils.js");
 const storeDataHandler = require("./storeDataHandler");
 const header = {'Content-Type': 'application/json'};
+const url = require('url');
 
 const storeDataCycleHandler = (req, res, fn) => {
   utils.collectDataAsync(req)
@@ -18,7 +19,9 @@ const storeDataCycleHandler = (req, res, fn) => {
 module.exports = (req, res) => {
 if (utils.isAuthenticated(req,res)) {
     if(req.method === 'GET' ) {
-      storeDataHandler.getStoreCatalogue().then(catalogueData =>{   
+      const quary = url.parse(req.url,[true]).query;
+      const searchQuary = quary.search || '';
+      storeDataHandler.getStoreCatalogue(searchQuary).then(catalogueData =>{   
         utils.sendResponse(res, catalogueData, 200, header);
       })
     } else if ( req.method === 'POST'){

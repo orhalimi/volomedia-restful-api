@@ -6,7 +6,7 @@
 // quantity: 1-99
 
 
-const mock_data = {
+const mockData = {
     a2sdf: {
       id:`a2sdf`,
       name: `Coca-Cola`,
@@ -27,16 +27,26 @@ const mock_data = {
     }
 }
 
-exports.getStoreCatalogue = async () =>{
-  return await JSON.stringify(mock_data);
+exports.getStoreCatalogue = async (searchQuary) =>{
+  if (searchQuary) {  
+    const cloneData = JSON.parse(JSON.stringify(mockData));
+    for (let property in cloneData) {
+      if (cloneData.hasOwnProperty(property) &&
+         !cloneData[property].name.includes(searchQuary)) {
+        delete cloneData[property];
+      }
+   }
+   return await JSON.stringify(cloneData);
+  }
+  return await JSON.stringify(mockData);
 }
 
 exports.addStoreCatalogue = async (json) =>{
   try {
-    if (isValidInput(json) && (json.id in mock_data)) {
+    if (isValidInput(json) && (json.id in mockData)) {
       throw `${json.id} already exist`;
     } else {
-      mock_data[json.id] = json;
+      mockData[json.id] = json;
       return await module.exports.getStoreCatalogue();
     }
   } catch(e) {
@@ -46,10 +56,10 @@ exports.addStoreCatalogue = async (json) =>{
 
 exports.updateStoreCatalogue = async (json) =>{
   try {
-    if (isValidInput(json) && !(json.id in mock_data)) {
+    if (isValidInput(json) && !(json.id in mockData)) {
       throw `couldn't find ${json.id}`
     } else {
-      mock_data[json.id] = json;
+      mockData[json.id] = json;
       return await module.exports.getStoreCatalogue();
     }
   } catch(e) {
@@ -62,10 +72,10 @@ exports.deleteStoreCatalogue = async (json) =>{
     if (!json.id || json.id.length < 5 || json.id.length > 10) {
       throw "ID must be between 5-10 characters";
     }
-    else if (!(json.id in mock_data)) {
+    else if (!(json.id in mockData)) {
       throw `couldn't find ${json.id}`;
     } else {
-      delete mock_data[json.id];
+      delete mockData[json.id];
       return await module.exports.getStoreCatalogue();
     }
   } catch(e) {

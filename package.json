@@ -1,0 +1,27 @@
+{
+  "name": "wolomedia-restfull-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "babel-node": "babel-node --presets=latest",
+    "start:dev": "nodemon --exec npm run babel-node -- ./src/server.js",
+    "build": "babel src build --out-dir build",
+    "start": "node build/server.js"
+  },
+  "author": "Or Halimi",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-latest": "^6.24.1"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "^16.1.0",
+    "nodemon": "^1.17.5"
+  },
+  "engines": {
+    "node": "6.10.2",
+    "npm": "6.1.0"
+  }
+}

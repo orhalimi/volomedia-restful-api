@@ -1,0 +1,7 @@
+logs
+*.log
+build
+node_modules
+bower_components
+tmp
+.lock-wscript

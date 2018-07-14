@@ -6,9 +6,10 @@
   "scripts": {
     "babel-node": "babel-node --presets=latest",
     "start:dev": "nodemon --exec npm run babel-node -- ./src/server.js",
-    "build": "babel src build --out-dir build",
+    "build-babel": "babel -d ./build ./src -s",
+    "build": "npm run build-babel",
     "postinstall": "npm run build",
-    "start": "node build/server.js"
+    "start": "npm run build && node ./build/server.js"
   },
   "author": "Or Halimi",
   "license": "ISC",

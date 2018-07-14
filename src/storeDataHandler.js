@@ -103,9 +103,3 @@ const isValidInput = (json) => {
 };
 
 
-// store mock date to simulate db
-// id 5-10
-// name 3-20
-// price: 0.1 - 999,999
-// quantity: 1-99
-
